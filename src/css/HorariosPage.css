@@ -1,0 +1,43 @@
+.containermain {
+    margin-top: 500;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    
+
+}
+
+.cabecera{
+    height: 15vh;
+    margin-top: 20;
+    background-color: chocolate;
+}
+
+.containerdatos {
+    margin-top: 10px;
+    height: 50vh;
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: aquamarine;
+
+}
+.parteIz{
+    width: 50%;
+    background-color: blueviolet;
+
+}
+.loginparte{
+    height: 20vh;
+    background-color: beige;
+}
+
+.foundparte{
+    height: 25vh;
+    background-color: aquamarine;
+}
+
+.parteDr{
+    width: 50%;
+    background-color: brown;
+}
