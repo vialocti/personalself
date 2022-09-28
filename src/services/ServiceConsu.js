@@ -56,3 +56,58 @@ export async function asistenciaPersona(claustro,fechaini,fechafin,legajo){
     }
 }
 
+//diasregistrados/0/28220/2022-09-05/2022-09-16
+
+//consulta dias asisistencia por agente
+export async function personaDiasAsistencia(claustro,fechaini,fechafin,legajo){
+    var fecfin=''
+    try {
+        if(fechafin==='0000-00-00' || fechafin===''){
+            fecfin=fechaini
+        }else{
+            fecfin=fechafin
+        }
+        
+        const response = await axios({
+            url: uri + `/diasregistrados/${claustro}/${fechaini}/${fecfin}/${legajo}`,
+            method:"GET"
+        })
+       
+        if(response.data.length===0){
+            console.log("NAda")
+        }
+         
+         return response
+    } catch (error) {
+        console.log(error)
+        
+    }
+}
+
+
+//horastotal/0/28367/2022-09-05/2022-09-16
+
+export async function personaHorasAsistencia(claustro,fechaini,fechafin,legajo){
+    var fecfin=''
+    try {
+        if(fechafin==='0000-00-00' || fechafin===''){
+            fecfin=fechaini
+        }else{
+            fecfin=fechafin
+        }
+        
+        const response = await axios({
+            url: uri + `/horastotal/${claustro}/${fechaini}/${fecfin}/${legajo}`,
+            method:"GET"
+        })
+       
+        if(response.data.length===0){
+            console.log("NAda")
+        }
+         
+         return response
+    } catch (error) {
+        console.log(error)
+        
+    }
+}

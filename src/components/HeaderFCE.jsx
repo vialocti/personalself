@@ -1,24 +1,37 @@
-import React from 'react'
-import Cookies from 'universal-cookie'
+import React, { useEffect } from 'react'
+import { useContext } from 'react'
+import AuthContext from '../contexts/AuthContext'
 
 
-const cookies = new Cookies()
+
 const HeaderFCE = () => {
 
- /* useEffect(() => {
-     //console.log(cookies.get('legajo'))
+  const {legajo,nombre,condi} = useContext(AuthContext)
+ useEffect(() => {
+     console.log(legajo)
   
     
-  }, [cookies.get('legajo')])
-  */
+  }, [legajo])
+  
   return (
-    <div className='container'>
-        <div className='imagen'>
-          <h2>{cookies.get('legajo')}</h2>
+
+  <div className='container'>
+       <div className='row'> 
+        
+        <div className='col'>
+          Legajo:{legajo!==9?legajo:null}
+        </div>  
+        
+        <div className='col'>
+          Nombre: {nombre}
         </div>
-        <div className='Titulo'>
-            
+        
+        <div className='col'>
+          Personal: {condi===1?'Docente':'No Docente'}
         </div>
+
+        </div> 
+        
         
     </div>
   )

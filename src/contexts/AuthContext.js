@@ -1,40 +1,78 @@
-import React,{createContext, useState} from "react"
+import React,{createContext, useState, useCallback, useMemo} from "react"
 import { autenticarse } from '../services/ServiceConsu'
-import Cookies from "universal-cookie"
+//import Cookies from "universal-cookie"
 
+const MY_AUTH_APP = false
+const MY_AUTH_LEGAJO = 9
+const MY_AUTH_CONDICION = 2
+const MY_AUTH_NOMBRE = null
+const MY_AUTH_NRODOC = null
 const AuthContext = createContext()
 
 
-const cookies = new Cookies()
+//const cookies = new Cookies()
 const AuthProvider =({children})=>{
     
     
-    const [legajo, setLegajo]=useState('')
-    const [isLoged, setIsLoged] =useState(false)
-
-    const [nrodoc,setNrodoc] = useState('')
+    const [legajo, setLegajo]=useState(useState(localStorage.getItem(MY_AUTH_LEGAJO)))
+    const [isLoged, setIsLoged] =useState(useState(localStorage.getItem(MY_AUTH_APP)))
+    const [nombre, setNombre] = useState(useState(localStorage.getItem(MY_AUTH_NOMBRE)))
+    const [nrodoc,setNrodoc] = useState(useState(localStorage.getItem(MY_AUTH_NRODOC)))
+    const [condi, setCondicion] = useState(useState(localStorage.getItem(MY_AUTH_CONDICION)))
     
-    async function login (legajo,nrodoc){
+    
+    
+    
+    const login = useCallback (async(leg,nrod)=>{
         
-        const data = await autenticarse(legajo,nrodoc)
-                 
-        cookies.set('legajo',data.data[0].legajo,{'path':'/'})
-        cookies.set('apellido',data.data[0].apellido,{'path':'/'})       
-        setIsLoged(true)
+        const data = await autenticarse(leg,nrod)
+        if (data.data[0].legajo === null){
+           
+            setIsLoged(false)   
+        }else{
+            localStorage.setItem(MY_AUTH_APP,true)
+            localStorage.setItem(MY_AUTH_LEGAJO,data.data[0].legajo)
+            localStorage.setItem(MY_AUTH_CONDICION,data.data[0].condicion)
+            localStorage.setItem(MY_AUTH_NRODOC,data.data[0].nrodocumento)
+            localStorage.setItem(MY_AUTH_NOMBRE,data.data[0].apellido)
+            setIsLoged(true)
+            setNombre(data.data[0].apellido)
+            setCondicion(data.data[0].condicion)
+            setNrodoc(data.data[0].nrodocumento) 
+            setLegajo(data.data[0].legajo)  
+
+                   
+        }  
+               
       
-    }
+    },[])
 
-    const logout =()=>{
-        
-        cookies.remove('legajo',{'path':'/'})
-        cookies.remove('apellido',{'path':'/'})       
-        setLegajo('')
+    const logout =useCallback(()=>{
+        localStorage.removeItem(MY_AUTH_APP)
+        localStorage.removeItem(MY_AUTH_NOMBRE)
+        localStorage.removeItem(MY_AUTH_NRODOC)
+        localStorage.removeItem(MY_AUTH_LEGAJO)
+        localStorage.removeItem(MY_AUTH_CONDICION)
+        setLegajo(9)
         setNrodoc('')
+        setNombre('')
+        setCondicion(2)
         setIsLoged(false)   
-    }
+    },[])
 
     
-    const data = {setLegajo,setNrodoc,legajo,nrodoc,login,logout,isLoged}
+    const data = useMemo(
+        ()=>({
+            login,
+            logout,
+            legajo,
+            isLoged,
+            nombre,
+            nrodoc,
+            condi,
+        }),[login,logout,isLoged,condi,legajo,nombre,nrodoc]
+    )
+
     
     return(
         <AuthContext.Provider value={data}>
