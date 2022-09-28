@@ -32,7 +32,7 @@ const HorariosPage = () => {
 
   const [ruta, setRuta] = useState(`${uri}horario_persofechas/28367/9/2122-09-01/2122-09-23`)
   const [rutaH, setRutaH] = useState(`${uri}horastotal/0/28367/2122-09-01/2122-09-23`)
-  const [rutaD, setRutaD] = useState(`${uri}diasregistrados/28367/9/2122-09-01/2122-09-23`)
+  const [rutaD, setRutaD] = useState(`${uri}diasregistrados/28367/2122-09-01/2122-09-23`)
 
   
   

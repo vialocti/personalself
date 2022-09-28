@@ -47,7 +47,8 @@ const NavBar = () => {
         
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <div className="container">
-    
+            <div className="navbar-brand logo" NavLink to="/"><img id="imgb" src={require('../logo-economicas.png')} alt="FCE"/></div>
+
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span className=" navbar-inverse navbar-toggler-icon"></span>
                 </button>
@@ -72,7 +73,7 @@ const NavBar = () => {
                     />
 
                 <input id="nrodoc" style={{marginRight:'2px'}}
-                    type="text"
+                    type="password"
                     placeholder="Nro.Documento" 
                     className="form-control mr-sm-2"
                     onChange={onHandleOnChangeDoc}
@@ -87,16 +88,16 @@ const NavBar = () => {
                 </button>
                 </div>
                 :
-                <div className='formi'>
+              
 
-                            
+                <div className='formilogout'>           
                 <button 
                     className="btn btn-primary btn-block"
                     onClick={logout}
                  >
                     LogOut       
                 </button>
-                </div>
+                </div> 
                 }
 
 
