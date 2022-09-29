@@ -42,11 +42,34 @@ const HorariosPage = () => {
     const getfechas=()=>
     {
       let ff = new Date()
-      let dia = ff.getDate()<10?'0'+ff.getDate():ff.getDate()
-      let mes = ff.getMonth()+1<10 ? '0'+ (ff.getMonth()+1):ff.getMonth()+1
-      let fechaf = ff.getFullYear() + '-' + mes + '-' + dia
-      let fechai = ff.getFullYear() + '-' + mes + '-01'
+      let diaC = ff.getDate()
+      let mes=''
+      let dia=''
+      let fechaf=''
+      let fechai=''
+      // console.log(diaC)
+      if (diaC > 1){
+            dia = ff.getDate()-1<10?'0'+ff.getDate():ff.getDate()-1
+            mes = ff.getMonth()+1<10 ? '0'+ (ff.getMonth()+1):ff.getMonth()+1
+            fechaf = ff.getFullYear() + '-' + mes + '-' + dia
+      }else {
+        mes =ff.getMonth()
+        if (mes===0 || mes === 2 || mes === 4 || mes === 6 || mes === 7 || mes === 9 || mes===11){
+          dia=31
+        } if(mes === 1){
+          dia=29
+        }else{
+          dia=30
+        }
+        fechaf=ff.getFullYear()+'-' + mes +'-'+ dia
+      }
+
+      //console.log(fechaf)
+      
+      fechai = ff.getFullYear() + '-' + mes + '-01'
+      
       console.log(fechaf, fechai)
+      
       if( Number.isInteger(legajo) && legajo!==9){
       setRuta(`${uri}horario_persofechas/${condi}/${legajo}/${fechai}/${fechaf}`)
       setRutaH(`${uri}horastotal/${condi}/${legajo}/${fechai}/${fechaf}`)
