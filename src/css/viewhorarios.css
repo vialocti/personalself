@@ -26,3 +26,10 @@ table thead{
 table tbody{
     text-align: center;
 }
+.resu{
+    padding: 2;
+    margin-top: 10;
+    background: rgb(194, 194, 209);
+    text-align: center;
+    color:rgb(0, 0, 0);
+}

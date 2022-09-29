@@ -50,7 +50,9 @@ const ViewHorarios = ({datosasistencia, horast,diast}) => {
       </table>
       </div>
        <div className="row">
-        <h6>Horas: {horast} -- Dias: {diast} -- Promedio:{promedio}</h6>
+        <div className='resu'>    
+            Horas: {horast} -- Dias: {diast} -- Promedio: {promedio}
+        </div>
         </div>
       </div>
       

@@ -8,13 +8,14 @@ import 'react-datepicker/dist/react-datepicker.css';
 import es from 'date-fns/locale/es'
 import AuthContext from '../contexts/AuthContext'
 import '../css/HorariosPage.css'
+import { CSVLink } from 'react-csv';
 
 
 
 registerLocale("es", es)
 
-//const uri = 'http://200.12.136.74:4000/biometrico/'
-const uri = 'http://localhost:4000/biometrico/'
+const uri = 'http://200.12.136.74:4000/biometrico/'
+//const uri = 'http://localhost:4000/biometrico/'
 
 
 
@@ -222,13 +223,18 @@ const onChangeFf = (fecha)=>{
                onClick={buscarAsistencia}
                 >Buscar
           </button>
+          {asistencia.length > 0 ? 
+        <button className='btn btn-outline'>
+        <CSVLink data={asistencia} filename={`asistencia_${legajo}_ ${new Date().toLocaleString()}.csv`}>Exportar</CSVLink>
+        </button>
+        :null}
        </div>
        </div>
 
        </div>
       </div>
        <div className='col xs-12 md-9'>
-          {asistencia.length > 0 ? <ViewHorarios datosasistencia={asistencia} horast={horasT} diast={diasT} />: null} 
+          {asistencia.length > 0 && !isNaN(horasT)  && !isNaN(diasT)? <ViewHorarios datosasistencia={asistencia} horast={horasT} diast={diasT} />: null} 
       </div>
     </div>
     

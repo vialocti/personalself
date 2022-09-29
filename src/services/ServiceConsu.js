@@ -2,8 +2,8 @@
 
 import axios from 'axios';
 
-//const uri="http://200.12.136.74:4000/biometrico";
-const uri="http://localhost:4000/biometrico";
+const uri="http://200.12.136.74:4000/biometrico";
+//const uri="http://localhost:4000/biometrico";
 
 
 
