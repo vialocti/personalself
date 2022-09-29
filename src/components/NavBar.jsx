@@ -47,7 +47,7 @@ const NavBar = () => {
         
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <div className="container">
-            <div className="navbar-brand logo" NavLink to="/"><img id="imgb" src={require('../logo-economicas.png')} alt="FCE"/></div>
+            <div className="navbar-brand logo"><img id="imgb" src={require('../logo-economicas.png')} alt="FCE"/></div>
 
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span className=" navbar-inverse navbar-toggler-icon"></span>

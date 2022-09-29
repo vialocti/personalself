@@ -29,10 +29,14 @@ const FoundFechas = () => {
   const [diasT, setDiasT] = useState('')
 
   const [ruta, setRuta] = useState(`${uri}horario_persofechas/28367/9/2122-09-01/2122-09-23`)
-  const [rutaH, setRutaH] = useState(`${uri}horastotal/0/28367/2122-09-01/2122-09-23`)
-  const [rutaD, setRutaD] = useState(`${uri}diasregistrados/28367/9/2122-09-01/2122-09-23`)
+  //const [rutaH, setRutaH] = useState(`${uri}horastotal/0/28367/2122-09-01/2122-09-23`)
+  //const [rutaD, setRutaD] = useState(`${uri}diasregistrados/28367/9/2122-09-01/2122-09-23`)
 
-  
+  /*
+  const [ruta, setRuta] = useState('')
+  const [rutaH, setRutaH] = useState('')
+  const [rutaD, setRutaD] = useState('')
+*/
   
   
   useEffect(()=>{
@@ -43,11 +47,11 @@ const FoundFechas = () => {
       let mes = ff.getMonth()+1<10 ? '0'+ (ff.getMonth()+1):ff.getMonth()+1
       let fechaf = ff.getFullYear() + '-' + mes + '-' + dia
       let fechai = ff.getFullYear() + '-' + mes + '-01'
-      console.log(fechaf, fechai)
+      //console.log(fechaf, fechai)
       if( Number.isInteger(legajo) && legajo!==9){
       setRuta(`${uri}horario_persofechas/${condi}/${legajo}/${fechai}/${fechaf}`)
-      setRutaH(`${uri}horastotal/${condi}/${legajo}/${fechai}/${fechaf}`)
-      setRutaD(`${uri}diasregistrados/${condi}/${legajo}/${fechai}/${fechaf}`)
+      //setRutaH(`${uri}horastotal/${condi}/${legajo}/${fechai}/${fechaf}`)
+      //setRutaD(`${uri}diasregistrados/${condi}/${legajo}/${fechai}/${fechaf}`)
       }
      }
 
@@ -60,7 +64,7 @@ const FoundFechas = () => {
   
   useEffect(() => {
 
-
+    /*
      const getDias = async  () => {
       
       try{
@@ -73,9 +77,7 @@ const FoundFechas = () => {
     }
     }
 
-
-
-    
+ 
     const getHoras = async  () => {
       
       try{
@@ -90,6 +92,7 @@ const FoundFechas = () => {
     }
     }
 
+    */
     const getAsistencia = async  () => {
       try{
   
@@ -105,11 +108,11 @@ const FoundFechas = () => {
     
 
     if( Number.isInteger(legajo) && legajo!==9){
-    getAsistencia()
-    getDias()
-    getHoras()
+      getAsistencia()
+     // getDias()
+      //getHoras()
     }
-  }, [ruta,rutaD,rutaH])
+  }, [ruta])
 
  
 
@@ -149,13 +152,13 @@ const FoundFechas = () => {
     
     
     let url = `${uri}horario_persofechas/${condi}/${legajo}/${fi}/${ff}`
-    let urlh= `${uri}horastotal/${condi}/${legajo}/${fi}/${ff}`
-    let urld= `${uri}diasregistrados/${condi}/${legajo}/${fi}/${ff}`
-     console.log(legajo)
+    //let urlh= `${uri}horastotal/${condi}/${legajo}/${fi}/${ff}`
+    //let urld= `${uri}diasregistrados/${condi}/${legajo}/${fi}/${ff}`
+   //  console.log(legajo)
     if( Number.isInteger(legajo) && legajo!==9 ){
         setRuta(url)
-        setRutaH(urlh)
-        setRutaD(urld)
+      //  setRutaH(urlh)
+      //  setRutaD(urld)
     }
    
    

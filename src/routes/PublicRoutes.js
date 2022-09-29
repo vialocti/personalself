@@ -16,7 +16,7 @@ const PublicRoutes = () => {
 
     return (
     <div>
-        <Outlet />
+     <Outlet />  
     </div>
   )
 }

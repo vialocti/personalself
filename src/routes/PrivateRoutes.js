@@ -16,7 +16,7 @@ const PrivateRoutes =()=>{
     }
     return(
         <div>
-            <Outlet />
+      <Outlet />
         </div>
     )
 

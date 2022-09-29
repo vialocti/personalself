@@ -1,22 +1,49 @@
 import React,{useEffect, useState} from 'react'
 import '../css/viewhorarios.css'
 
-const ViewHorarios = ({datosasistencia, horast,diast}) => {
+const ViewHorarios = ({datosasistencia}) => {
  
   const [promedio, setPromedio]=useState('')
+  const [horasT, setHorasT] = useState('')
+  const [diasT, setDiasT] = useState('')
+
 
 
 
   useEffect(() => {
+  
     const getPromedio=()=>{
-      const horas = Math.floor(parseFloat(horast)/parseFloat(diast))
-      const minutos = Math.round(((parseFloat(horast)/parseFloat(diast)) - horas)*60, 2)
+      
+      let sumaH =datosasistencia.reduce((sum, value) => (typeof value.horasT == "number" ? sum + value.horasT : sum), 0)
+      let fechaant=datosasistencia[0].fecha
+      let dias=1
+      datosasistencia.map((ele)=>{
+        if(fechaant !== ele.fecha){fechaant=ele.fecha; dias= dias + 1}
+      }
+      )
+      setDiasT(dias)
+      setHorasT(sumaH.toFixed(2))
+      const horas = Math.floor(parseFloat(sumaH)/parseFloat(dias))
+      const minutos = Math.round(((parseFloat(sumaH)/parseFloat(dias)) - horas)*60, 2)
+      
       setPromedio(`${horas} horas con ${minutos} minutos`)
+    
+    }
+
+    const mostrarPromedio =()=>{
+      const horas = Math.floor(parseFloat(horasT)/parseFloat(diasT))
+      const minutos = Math.round(((parseFloat(horasT)/parseFloat(diasT)) - horas)*60, 2)
+     
+      setPromedio(`${horas} horas con ${minutos} minutos`)
+      
     }
 
     getPromedio()
+    mostrarPromedio()
+   
+  }, [datosasistencia,horasT,diasT])
   
-  }, [horast,diast])
+
   
 
 
@@ -25,7 +52,7 @@ const ViewHorarios = ({datosasistencia, horast,diast}) => {
     
       <div className='container tbl-container'>
         <div className="row tbl-fixed">
-      <table class="table table-striped table-sm">
+      <table className="table table-striped table-sm">
           <thead>
             <tr>
               <th>Fecha</th>
@@ -51,7 +78,7 @@ const ViewHorarios = ({datosasistencia, horast,diast}) => {
       </div>
        <div className="row">
         <div className='resu'>    
-            Horas: {horast} -- Dias: {diast} -- Promedio: {promedio}
+            Horas: {horasT} -- Dias: {diasT} -- Promedio: {promedio}
         </div>
         </div>
       </div>

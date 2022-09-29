@@ -28,12 +28,12 @@ const HorariosPage = () => {
   const [fechai,setFechai]=useState(new Date())
   const [fechaf,setFechaf]=useState(new Date())
  
-  const [horasT, setHorasT] =useState('')
-  const [diasT, setDiasT] = useState('')
+  //const [horasT, setHorasT] =useState('')
+ // const [diasT, setDiasT] = useState('')
 
   const [ruta, setRuta] = useState(`${uri}horario_persofechas/28367/9/2122-09-01/2122-09-23`)
-  const [rutaH, setRutaH] = useState(`${uri}horastotal/0/28367/2122-09-01/2122-09-23`)
-  const [rutaD, setRutaD] = useState(`${uri}diasregistrados/28367/2122-09-01/2122-09-23`)
+  //const [rutaH, setRutaH] = useState(`${uri}horastotal/0/28367/2122-09-01/2122-09-23`)
+  //const [rutaD, setRutaD] = useState(`${uri}diasregistrados/28367/2122-09-01/2122-09-23`)
 
   
   
@@ -68,12 +68,12 @@ const HorariosPage = () => {
       
       fechai = ff.getFullYear() + '-' + mes + '-01'
       
-      console.log(fechaf, fechai)
+    //  console.log(fechaf, fechai)
       
       if( Number.isInteger(legajo) && legajo!==9){
       setRuta(`${uri}horario_persofechas/${condi}/${legajo}/${fechai}/${fechaf}`)
-      setRutaH(`${uri}horastotal/${condi}/${legajo}/${fechai}/${fechaf}`)
-      setRutaD(`${uri}diasregistrados/${condi}/${legajo}/${fechai}/${fechaf}`)
+      //setRutaH(`${uri}horastotal/${condi}/${legajo}/${fechai}/${fechaf}`)
+      //setRutaD(`${uri}diasregistrados/${condi}/${legajo}/${fechai}/${fechaf}`)
       }
      }
 
@@ -87,7 +87,10 @@ const HorariosPage = () => {
   useEffect(() => {
 
 
-     const getDias = async  () => {
+     
+    
+    /*
+    const getDias = async  () => {
       
       try{
   
@@ -99,9 +102,10 @@ const HorariosPage = () => {
     }
     }
 
-
+  */
 
     
+    /*
     const getHoras = async  () => {
       
       try{
@@ -114,7 +118,7 @@ const HorariosPage = () => {
     }catch(error){
         console.log(error)
     }
-    }
+    }*/
 
     const getAsistencia = async  () => {
       try{
@@ -132,10 +136,10 @@ const HorariosPage = () => {
 
     if( Number.isInteger(legajo) && legajo!==9){
     getAsistencia()
-    getDias()
-    getHoras()
+      //getDias()
+      //getHoras()
     }
-  }, [ruta,rutaD,rutaH])
+  }, [ruta])
 
  
 
@@ -175,13 +179,13 @@ const HorariosPage = () => {
     
     
     let url = `${uri}horario_persofechas/${condi}/${legajo}/${fi}/${ff}`
-    let urlh= `${uri}horastotal/${condi}/${legajo}/${fi}/${ff}`
-    let urld= `${uri}diasregistrados/${condi}/${legajo}/${fi}/${ff}`
-     console.log(legajo)
+    //let urlh= `${uri}horastotal/${condi}/${legajo}/${fi}/${ff}`
+    //let urld= `${uri}diasregistrados/${condi}/${legajo}/${fi}/${ff}`
+    // console.log(legajo)
     if( Number.isInteger(legajo) && legajo!==9 ){
         setRuta(url)
-        setRutaH(urlh)
-        setRutaD(urld)
+      //  setRutaH(urlh)
+        //setRutaD(urld)
     }
    
    
@@ -257,7 +261,7 @@ const onChangeFf = (fecha)=>{
        </div>
       </div>
        <div className='col xs-12 md-9'>
-          {asistencia.length > 0 && !isNaN(horasT)  && !isNaN(diasT)? <ViewHorarios datosasistencia={asistencia} horast={horasT} diast={diasT} />: null} 
+          {asistencia.length > 0 ? <ViewHorarios datosasistencia={asistencia}/>: null} 
       </div>
     </div>
     
