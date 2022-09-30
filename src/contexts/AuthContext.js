@@ -7,6 +7,7 @@ const MY_AUTH_LEGAJO = 9
 const MY_AUTH_CONDICION = 2
 const MY_AUTH_NOMBRE = null
 const MY_AUTH_NRODOC = null
+//const MY_AUTH_PASSW = null
 const AuthContext = createContext()
 
 
@@ -14,18 +15,19 @@ const AuthContext = createContext()
 const AuthProvider =({children})=>{
     
     
-    const [legajo, setLegajo]=useState(useState(localStorage.getItem(MY_AUTH_LEGAJO)))
-    const [isLoged, setIsLoged] =useState(useState(localStorage.getItem(MY_AUTH_APP)))
-    const [nombre, setNombre] = useState(useState(localStorage.getItem(MY_AUTH_NOMBRE)))
-    const [nrodoc,setNrodoc] = useState(useState(localStorage.getItem(MY_AUTH_NRODOC)))
-    const [condi, setCondicion] = useState(useState(localStorage.getItem(MY_AUTH_CONDICION)))
+    const [legajo, setLegajo]=useState(localStorage.getItem(MY_AUTH_LEGAJO))
+    const [isLoged, setIsLoged] =useState(localStorage.getItem(MY_AUTH_APP))
+    const [nombre, setNombre] = useState(localStorage.getItem(MY_AUTH_NOMBRE))
+    const [nrodoc,setNrodoc] = useState(localStorage.getItem(MY_AUTH_NRODOC))
+    const [condi, setCondicion] = useState(localStorage.getItem(MY_AUTH_CONDICION))
+    //const [password, setPassword] = useState(localStorage.getItem(MY_AUTH_PASSW)) 
     
     
     
-    
-    const login = useCallback (async(leg,nrod)=>{
-        
-        const data = await autenticarse(leg,nrod)
+    const login = useCallback (async(leg,passw)=>{
+        //setPassword=(passw.toString()) 
+        //console.log(passw)
+        const data = await autenticarse(leg,passw)  
         if (data.data[0].legajo === null){
            
             setIsLoged(false)   
@@ -35,6 +37,7 @@ const AuthProvider =({children})=>{
             localStorage.setItem(MY_AUTH_CONDICION,data.data[0].condicion)
             localStorage.setItem(MY_AUTH_NRODOC,data.data[0].nrodocumento)
             localStorage.setItem(MY_AUTH_NOMBRE,data.data[0].apellido)
+          //  localStorage.setItem(MY_AUTH_PASSW,password)
             setIsLoged(true)
             setNombre(data.data[0].apellido)
             setCondicion(data.data[0].condicion)
@@ -53,8 +56,10 @@ const AuthProvider =({children})=>{
         localStorage.removeItem(MY_AUTH_NRODOC)
         localStorage.removeItem(MY_AUTH_LEGAJO)
         localStorage.removeItem(MY_AUTH_CONDICION)
+        //localStorage.removeItem(MY_AUTH_PASSW)
         setLegajo(9)
         setNrodoc('')
+        //setPassword('')
         setNombre('')
         setCondicion(2)
         setIsLoged(false)   

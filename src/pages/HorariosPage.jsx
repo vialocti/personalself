@@ -9,13 +9,14 @@ import es from 'date-fns/locale/es'
 import AuthContext from '../contexts/AuthContext'
 import '../css/HorariosPage.css'
 import { CSVLink } from 'react-csv';
+import Swal from 'sweetalert2';
 
 
 
 registerLocale("es", es)
 
-const uri = 'http://200.12.136.74:4000/biometrico/'
-//const uri = 'http://localhost:4000/biometrico/'
+//const uri = 'http://200.12.136.74:4000/biometrico/'
+const uri = 'http://localhost:4000/biometrico/'
 
 
 
@@ -170,7 +171,12 @@ const HorariosPage = () => {
     var fi =''
     
     if (fechaf-fechai < 0){
-      alert('La fecha Final no puede ser menor a la fecha inicial')
+      Swal.fire({
+        icon: 'error',
+        title: 'Error de Fechas...',
+        text: 'Fecha Inicial debe ser menor a la Fecha Final',
+        
+      })
     }else{
       ff = convertirfecha(fechaf)
       fi = convertirfecha(fechai)

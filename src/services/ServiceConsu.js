@@ -2,14 +2,15 @@
 
 import axios from 'axios';
 
-const uri="http://200.12.136.74:4000/biometrico";
-//const uri="http://localhost:4000/biometrico";
+//const uri="http://200.12.136.74:4000/biometrico";
+const uri="http://localhost:4000/biometrico";
 
 
 
 //autenticarse
-export async function autenticarse(legajo,nrodoc){
-        let strq=`${uri}/login/${legajo}/${nrodoc}`        
+export async function autenticarse(legajo,passw){
+        let strq=`${uri}/login/${legajo}/${passw}`       
+       
         try {
             const response=await axios({
                 url:strq,
@@ -24,6 +25,27 @@ export async function autenticarse(legajo,nrodoc){
             console.log(error)
         }
     }
+
+
+//cambiar pass
+//
+export async function changepassAgente(legajo,passwold, passnew){
+    let strq=`${uri}/changepass/${legajo}/${passwold}/${passnew}`       
+   
+    try {
+        const response=await axios({
+            url:strq,
+            method:"GET"
+        })
+        
+           return response
+        
+
+        
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 
 

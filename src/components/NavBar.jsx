@@ -3,13 +3,13 @@ import React, { useContext, useState,useEffect } from 'react'
 import { NavLink} from 'react-router-dom'
 import AuthContext from '../contexts/AuthContext'
 import '../css/NavBar.css'
-
+import Swal from 'sweetalert2'
 
 const NavBar = () => {
   
     const {login,logout,isLoged} = useContext(AuthContext)
     const [leg, setLeg] = useState('')
-    const [nrod, setNrod] = useState('')  
+    const [passw, setPassw] = useState('')  
   
   
 
@@ -20,10 +20,14 @@ const NavBar = () => {
 
  },[logout])
 
+ 
+
   const onHandleSubmit =()=>{
-       login(leg,nrod)
+       login(leg,passw)
        setLeg('')
-       setNrod('')
+       setPassw('')
+       
+       
        
     }
 
@@ -36,7 +40,7 @@ const NavBar = () => {
 
     const onHandleOnChangeDoc =(event)=>{
         event.preventDefault()
-        setNrod(event.target.value)    
+        setPassw(event.target.value)    
      }
 
  
@@ -57,6 +61,7 @@ const NavBar = () => {
                        
                        <li className="nav-item"><NavLink to="/asistencia" className="nav-link">Asistencia Personal</NavLink></li>
                        <li className="nav-item"><NavLink to="/asistencia/asistenciaArea" className="nav-link">Asistencia Area</NavLink></li>
+                       <li className="nav-item"><NavLink to="/asistencia/cambiarclave" className="nav-link">Cambiar Password</NavLink></li>
                     </div>
                 </div>
             </div>
@@ -74,10 +79,10 @@ const NavBar = () => {
 
                 <input id="nrodoc" style={{marginRight:'2px'}}
                     type="password"
-                    placeholder="Nro.Documento" 
+                    placeholder="Password" 
                     className="form-control mr-sm-2"
                     onChange={onHandleOnChangeDoc}
-                    value={nrod}  
+                    value={passw}  
                 />
  
                 <button 
