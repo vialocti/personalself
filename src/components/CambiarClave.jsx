@@ -15,7 +15,8 @@ const schema = yup.object({
 }).required();
 
 const CambiarClave = () => {
-  const {logout,nombre,legajo}= useContext(AuthContext)
+  const {logout}= useContext(AuthContext)
+
     const {register, handleSubmit,formState:{errors}} =useForm({
      resolver : yupResolver(schema)
     });
@@ -37,8 +38,8 @@ const CambiarClave = () => {
         }else if(resp.data.affectedRows===0){
           Swal.fire({
             icon: 'error',
-            title: 'Oops...',
-            text: 'Los datos son incorrectos'
+            title: 'Error de datos',
+            text: 'Legajo o Password Actual incorrecto'
           })
         }
 
@@ -47,46 +48,79 @@ const CambiarClave = () => {
 
   return (
     <div className='container'>
+      
        <div className="row">
-       <div className="col">
-       <div className='card'>
-        <h6>{nombre}({legajo})</h6>
-        <h4>Cambio de PassWord</h4>
+       
+       <div className="col xs-12 md-6">
+       
+            <div className='card'>
         
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className='col xs-12 md-4'>  
-            <label htmlFor="legajo">Legajo</label><p>{errors.legajo?.message}</p>
-            <input 
-                type="text" 
-                {...register("legajo")} 
-            />
-          </div>
-          <div className='col xs-12 md-4'>
-                <label htmlFor="passold">Password Actual</label><p>{errors.passold?.message}</p>
+                <div className="card-title text-center border-bottom">
+                    <h3 className='p-3'> Cambiar Clave </h3>
+                </div>  
+            
+              <div className="card-body">
+              
+                <form onSubmit={handleSubmit(onSubmit)}>
+         
+                          
+                     
+                <div className='form-group'>
+                    <label htmlFor="legajo">Legajo del Agente</label>
+                    <input type="text" 
+                    {...register("legajo")} 
+                  /><p>{errors.legajo?.message}</p>
+                </div>
+                <div className='form-group'>
+                    <label htmlFor="passold">Password Actual</label>
+                    <input type="text" 
+                    {...register("passold")} 
+                  /><p>{errors.passold?.message}</p>
+              </div>
+              
+                           
+         
+              <div className='form-group'>
+                <label htmlFor="passnew">Nuevo Password</label>
                 <input type="text" 
-                {...register("passold")} 
-            />
-          </div>
-          <div className='col xs-12 md-4'>
-          <label htmlFor="passnew">Nuevo Password</label><p>{errors.passnew?.message}</p>
-          <input type="text" 
-          {...register("passnew")} 
-          />
-          </div>
-          <br/>
-               
+                {...register("passnew")} 
+                /><p>{errors.passnew?.message}</p>
+              </div>
           
-          <button 
-          type="submit"
-          className='btn btn-warning'
-          >
-                Cambiar Clave
-            </button>
-        </form>
+               
+                <div className='form-group'>
+                  <button type="submit"className='btn btn-warning'>
+                    Cambiar Clave
+                </button>
+              </div>
+
+            </form>
+          </div>
+          </div>
+        </div>
+       
+
+        <div className='col xs-12 md-6'>
+          <div className="card">
+            <div className="card-header">
+            <h5 className="card-title">Importante: Actualización Password</h5>
+            </div>
+            <div className="card-body">
+              <ul className="list-group list-group-flush">
+                <li className="list-group-item">Las claves son numericas</li>
+                <li className="list-group-item"> Deben poseer una longitud de 4 a 8 digitos</li>
+                <li className="list-group-item"> Puenden comenzar con el digito 0</li>
+                <li className="list-group-item"></li>
+              </ul>
+              <div className="card-header">
+                <h6 className="card-subtitle mb-2 text-muted">Contacto:</h6>
+                <h6 className="card-subtitle mb-2 text-muted">alfredo.brizuela@fce.uncu.edu.ar</h6>
+              </div>
+            </div>
+          </div>
         </div>
         </div>
-        </div>
-    </div>
+      </div>
   )
 }
 
