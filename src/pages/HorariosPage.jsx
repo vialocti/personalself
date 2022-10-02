@@ -3,7 +3,7 @@ import axios from 'axios'
 
 import ReactDatePicker, { registerLocale } from 'react-datepicker'
 import ViewHorarios from '../components/ViewHorarios'
-import '../css/busquedaFechas.css'
+
 import 'react-datepicker/dist/react-datepicker.css';
 import es from 'date-fns/locale/es'
 import AuthContext from '../contexts/AuthContext'
@@ -15,14 +15,14 @@ import Swal from 'sweetalert2';
 
 registerLocale("es", es)
 
-//const uri = 'http://200.12.136.74:4000/biometrico/'
-const uri = 'http://localhost:4000/biometrico/'
+const uri = 'http://200.12.136.74:4000/biometrico/'
+//const uri = 'http://localhost:4000/biometrico/'
 
 
 
 
 const HorariosPage = () => {
-  const {legajo,condi,nombre} = useContext(AuthContext)  
+  const {legajo,condi} = useContext(AuthContext)  
   
   const [asistencia, setAsistencia] = useState([])
   
@@ -81,7 +81,7 @@ const HorariosPage = () => {
 
     getfechas()
    
-  },[legajo])
+  },[legajo,condi])
   
   
   
@@ -140,7 +140,7 @@ const HorariosPage = () => {
       //getDias()
       //getHoras()
     }
-  }, [ruta])
+  }, [ruta,legajo])
 
  
 
@@ -223,13 +223,13 @@ const onChangeFf = (fecha)=>{
       
      
        
-      <div className="card">
-        <div className="card-header">
-        {nombre}({legajo})
-        </div> 
+      <div className="card shadow">
+      <div className="card-title text-left border-bottom">
+                <h4 className='p-3'> Ingresar Período a Controlar  </h4>
+            </div> 
          <div className="card-body">
 
-          <div className='row'>
+          <div>
             <label className='label'htmlFor="fechainicial">Fecha Inicio</label>
                 <ReactDatePicker 
                 id='fechai' 
@@ -239,7 +239,7 @@ const onChangeFf = (fecha)=>{
             />
           </div>
       
-          <div className='row'>
+         <div style={{marginTop:'10px'}}>
             <label className='label' htmlFor="fechafinal">Fecha Fin</label>
             <ReactDatePicker 
               id='fechaf' 
@@ -254,11 +254,11 @@ const onChangeFf = (fecha)=>{
        <div className='rowp'>
           <button className='btn btn-primary' 
                onClick={buscarAsistencia}
-                >Buscar
+                >Ver Asistencia
           </button>
           {asistencia.length > 0 ? 
         <button className='btn btn-outline'>
-        <CSVLink data={asistencia} filename={`asistencia_${legajo}_ ${new Date().toLocaleString()}.csv`}>Exportar</CSVLink>
+        <CSVLink data={asistencia} filename={`asistencia_${legajo}_ ${new Date().toLocaleString()}.csv`}>Exportar a .csv</CSVLink>
         </button>
         :null}
        </div>

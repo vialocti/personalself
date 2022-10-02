@@ -28,9 +28,10 @@ const AuthProvider =({children})=>{
         //setPassword=(passw.toString()) 
         //console.log(passw)
         const data = await autenticarse(leg,passw)  
-        if (data.data[0].legajo === null){
+        if (data.data[0].existe === 0){
            
-            setIsLoged(false)   
+            setIsLoged(false)  
+            return 0
         }else{
             localStorage.setItem(MY_AUTH_APP,true)
             localStorage.setItem(MY_AUTH_LEGAJO,data.data[0].legajo)
@@ -43,7 +44,8 @@ const AuthProvider =({children})=>{
             setCondicion(data.data[0].condicion)
             setNrodoc(data.data[0].nrodocumento) 
             setLegajo(data.data[0].legajo)  
-
+            
+            
                    
         }  
                

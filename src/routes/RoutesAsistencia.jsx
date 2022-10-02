@@ -12,6 +12,7 @@ import HorariosAreaPage from '../pages/HorariosAreaPage'
 import PublicRoutes from './PublicRoutes'
 import PrivateRoutes from './PrivateRoutes'
 import CambiarClave from '../components/CambiarClave'
+import LoginPage from '../pages/LoginPage'
 
 
 
@@ -26,6 +27,7 @@ const RoutesAsistencia = () => {
         <Routes>
             <Route path='/' element={<PublicRoutes/>}>
               <Route index element={<HomePage/>} />
+              <Route exact path='/login' element={<LoginPage />} />
             </Route>
             <Route path='/asistencia' element={<PrivateRoutes/>}>
               <Route index element={<HorariosPage/>} />
