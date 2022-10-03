@@ -50,9 +50,10 @@ const HorariosPage = () => {
       let fechai=''
       // console.log(diaC)
       if (diaC > 1){
-            dia = ff.getDate()-1<10?'0'+ff.getDate():ff.getDate()-1
+            dia = ff.getDate()-1 < 10?'0'+ff.getDate()-1:ff.getDate()-1
             mes = ff.getMonth()+1<10 ? '0'+ (ff.getMonth()+1):ff.getMonth()+1
             fechaf = ff.getFullYear() + '-' + mes + '-' + dia
+            //console.log(dia)
       }else {
         mes =ff.getMonth()
         if (mes===0 || mes === 2 || mes === 4 || mes === 6 || mes === 7 || mes === 9 || mes===11){
@@ -69,7 +70,7 @@ const HorariosPage = () => {
       
       fechai = ff.getFullYear() + '-' + mes + '-01'
       
-    //  console.log(fechaf, fechai)
+    //console.log(fechaf, fechai)
       
       if( Number.isInteger(legajo) && legajo!==9){
       setRuta(`${uri}horario_persofechas/${condi}/${legajo}/${fechai}/${fechaf}`)
@@ -126,6 +127,7 @@ const HorariosPage = () => {
   
         const res = await axios.get(ruta)
         await setAsistencia(res.data)
+        
       
       
        

@@ -41,7 +41,7 @@ const NavBar = () => {
                        </div>
                 </div>
                 <div>
-                    {isLoged?<div class="fw-bold">{nombre}</div>:null}
+                    {isLoged?<div className="fw-bold">{nombre}</div>:null}
                 </div>
             </div>
         </nav>
