@@ -7,7 +7,8 @@ const MY_AUTH_LEGAJO = 9
 const MY_AUTH_CONDICION = 2
 const MY_AUTH_NOMBRE = null
 const MY_AUTH_NRODOC = null
-//const MY_AUTH_PASSW = null
+const MY_AUTH_AREA = ''
+const MY_AUTH_S_AREA='N'
 const AuthContext = createContext()
 
 
@@ -20,8 +21,8 @@ const AuthProvider =({children})=>{
     const [nombre, setNombre] = useState(localStorage.getItem(MY_AUTH_NOMBRE))
     const [nrodoc,setNrodoc] = useState(localStorage.getItem(MY_AUTH_NRODOC))
     const [condi, setCondicion] = useState(localStorage.getItem(MY_AUTH_CONDICION))
-    //const [password, setPassword] = useState(localStorage.getItem(MY_AUTH_PASSW)) 
-    
+    const [area, setArea] = useState(localStorage.getItem(MY_AUTH_AREA)) 
+    const [supArea, setSupArea] = useState(localStorage.getItem(MY_AUTH_S_AREA))
     
     
     const login = useCallback (async(leg,passw)=>{
@@ -39,12 +40,15 @@ const AuthProvider =({children})=>{
             localStorage.setItem(MY_AUTH_NRODOC,data.data[0].nrodocumento)
             localStorage.setItem(MY_AUTH_NOMBRE,data.data[0].apellido)
           //  localStorage.setItem(MY_AUTH_PASSW,password)
+          localStorage.setItem(MY_AUTH_AREA,data.data[0].area)
+          localStorage.setItem(MY_AUTH_S_AREA,data.data[0].encargado_area)
             setIsLoged(true)
             setNombre(data.data[0].apellido)
             setCondicion(data.data[0].condicion)
             setNrodoc(data.data[0].nrodocumento) 
             setLegajo(data.data[0].legajo)  
-            
+            setArea(data.data[0].area)
+            setSupArea(data.data[0].encargado_area) 
             
                    
         }  
@@ -58,6 +62,8 @@ const AuthProvider =({children})=>{
         localStorage.removeItem(MY_AUTH_NRODOC)
         localStorage.removeItem(MY_AUTH_LEGAJO)
         localStorage.removeItem(MY_AUTH_CONDICION)
+        localStorage.removeItem(MY_AUTH_AREA)
+        localStorage.removeItem(MY_AUTH_S_AREA)
         //localStorage.removeItem(MY_AUTH_PASSW)
         setLegajo(9)
         setNrodoc('')
@@ -65,6 +71,8 @@ const AuthProvider =({children})=>{
         setNombre('')
         setCondicion(2)
         setIsLoged(false)   
+        setArea('')
+        setSupArea('N')
     },[])
 
     
@@ -77,7 +85,9 @@ const AuthProvider =({children})=>{
             nombre,
             nrodoc,
             condi,
-        }),[login,logout,isLoged,condi,legajo,nombre,nrodoc]
+            area,
+            supArea
+        }),[login,logout,isLoged,condi,legajo,nombre,nrodoc,area,supArea]
     )
 
     

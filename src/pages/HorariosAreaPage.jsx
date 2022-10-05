@@ -8,6 +8,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import es from 'date-fns/locale/es'
 import AuthContext from '../contexts/AuthContext'
 import '../css/HorariosPageArea.css'
+import { authAreas } from '../utils/dataroles';
 import { CSVLink } from 'react-csv';
 import Swal from 'sweetalert2';
 
@@ -22,12 +23,13 @@ const uri = 'http://200.12.136.74:4000/biometrico/'
 
 
 const HorariosAreaPage = () => {
-  const {legajo} = useContext(AuthContext)  
+  const {legajo,area,supArea} = useContext(AuthContext)  
   
   const [asistencia_area, setAsistencia_area] = useState([])
   const [habilitado, setHabilitado ] = useState(false)
   const [fechai,setFechai]=useState(new Date())
   const [fechaf,setFechaf]=useState(new Date())
+  const [areasAuth, setAreasAuth] = useState([])
  
 
   const [ruta, setRuta] = useState(`${uri}horas-area_fecha/t/2122-09-01/2122-09-23`)
@@ -35,8 +37,12 @@ const HorariosAreaPage = () => {
 
   useEffect(()=>{
       
-    if(legajo===28367){
+    if(supArea==='S' || supArea==='A'){
         setHabilitado(true)
+        if(supArea==='A'){
+        const areasAuth =authAreas.find(area=>area.legajo===legajo)
+        setAreasAuth(areasAuth.areas)
+        }
       }else{
         Swal.fire({
           icon: 'error',
@@ -46,7 +52,7 @@ const HorariosAreaPage = () => {
         })
 
       }
-  },[legajo])
+  },[legajo,supArea])
   
   useEffect(() => {
 
@@ -96,7 +102,7 @@ const HorariosAreaPage = () => {
   const buscarAsistencia = async ()=>{
     var ff = ''
     var fi =''
-    
+    try{
     if (fechaf-fechai < 0){
       Swal.fire({
         icon: 'error',
@@ -109,15 +115,38 @@ const HorariosAreaPage = () => {
       fi = convertirfecha(fechai)
     }
     
-    let area = document.getElementById('area').value
-    
-    
-    let url = `${uri}horas_area_fecha/${area}/${fi}/${ff}`
+    let areaCombo = document.getElementById('area').value
+    if (supArea==='A'){
 
+      if (areasAuth.find(area=>area === areaCombo)){
+        let url = `${uri}horas_area_fecha/${areaCombo}/${fi}/${ff}`
+          setRuta(url)
+      } else{
+        Swal.fire({
+          icon: 'info',
+          title: 'Acceso a Area No Autorizado ',
+          text: 'Sin Permiso para acceder a la info de esta Area',
+          
+        })
+      }
     
-        setRuta(url)
+    }else
     
+      if (areaCombo===area){
     
+          let url = `${uri}horas_area_fecha/${areaCombo}/${fi}/${ff}`
+          setRuta(url)
+    }else{
+      Swal.fire({
+        icon: 'info',
+        title: 'Acceso a Area No Autorizado ',
+        text: 'Sin Permiso para acceder a la info de esta Area',
+        
+      })
+    }
+  }catch(error){
+    console.log(error)
+  }
    
    
 }  
