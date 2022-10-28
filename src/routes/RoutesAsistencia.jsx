@@ -13,6 +13,7 @@ import PublicRoutes from './PublicRoutes'
 import PrivateRoutes from './PrivateRoutes'
 import CambiarClave from '../components/CambiarClave'
 import LoginPage from '../pages/LoginPage'
+import AsistenciaVirtualPage from '../pages/AsistenciaVirtualPage'
 
 
 
@@ -33,6 +34,7 @@ const RoutesAsistencia = () => {
               <Route index element={<HorariosPage/>} />
               <Route exact path ='/asistencia/asistenciaArea' element={<HorariosAreaPage/>} />
               <Route exact path='/asistencia/cambiarclave' element={<CambiarClave/>}/>
+              <Route exact path='/asistencia/virtual' element={<AsistenciaVirtualPage/>}/>
             </Route>
         
         </Routes>

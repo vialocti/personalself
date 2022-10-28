@@ -19,7 +19,7 @@ const HomePage = () => {
                       <li className="list-group-item"> Mostrar sus registros de Asistencia </li>
                       <li className="list-group-item"> Mostrar horas totales y promedio en un periodo dado</li>
                       <li className="list-group-item"> Pudiendo corroborar que sean los correctos </li>
-                      
+                      <li className="list-group-item"> Verificar asistencias por Areas de responsabilidad </li>
                     </ul>
                 
             

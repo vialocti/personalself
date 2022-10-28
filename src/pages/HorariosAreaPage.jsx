@@ -42,6 +42,7 @@ const HorariosAreaPage = () => {
         if(supArea==='A'){
         const areasAuth =authAreas.find(area=>area.legajo===legajo)
         setAreasAuth(areasAuth.areas)
+        console.log(areasAuth)
         }
       }else{
         Swal.fire({
@@ -129,7 +130,7 @@ const HorariosAreaPage = () => {
           
         })
       }
-    
+    console.log(areaCombo)
     }else
     
       if (areaCombo===area){
@@ -188,9 +189,9 @@ const onChangeFf = (fecha)=>{
           <label htmlFor="area"> Area </label>
           <select id='area' className='select' style={{width:'350px',height:'40px'}}>
             <option>SELECCIONE UN AREA</option>
-            <option value="Carrera_Licenciatura_en_Administracion">Carrera Licenciatura en  Administracion</option>
-            <option value="Carrera_Licenciatura_en_Economia">Carrera Licenciatura en Economia</option>
-            <option value="Carrera_Contador_Publico">Carrera Contador Público</option>
+            <option value="Carrera_Licenciatura_en_Administración">Carrera Licenciatura en  Administracion</option>
+            <option value="Carrera_Licenciatura_en_Economía">Carrera Licenciatura en Economia</option>
+            <option value="Carrera_Contador_Público">Carrera Contador Público</option>
             <option value="Carrera_Licenciatura_en_Logística">Carrera Licenciatura en Logística</option>            
             <option value="Decanato">Decanato</option>
             <option value="Departamento_Clases_y_Exámenes">Departamento Clases y Exámenes</option>
@@ -285,7 +286,10 @@ const onChangeFf = (fecha)=>{
           </tbody>
       </table>
       </div>
-    </div>: null} 
+    </div>: <div className='container'>
+              <h4> Sin Registros Fecha seleccionada</h4>
+            </div>
+      } 
       </div>
     </div>
 }

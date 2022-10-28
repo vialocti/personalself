@@ -15,8 +15,8 @@ import Swal from 'sweetalert2';
 
 registerLocale("es", es)
 
-//const uri = 'http://200.12.136.74:4000/biometrico/'
-const uri = 'http://localhost:4000/biometrico/'
+const uri = 'http://200.12.136.74:4000/biometrico/'
+//const uri = 'http://localhost:4000/biometrico/'
 
 
 
@@ -25,6 +25,7 @@ const HorariosPage = () => {
   const {legajo,condi} = useContext(AuthContext)  
   
   const [asistencia, setAsistencia] = useState([])
+  const [inasistencia, setInasistencia] = useState([])
   
   const [fechai,setFechai]=useState(new Date())
   const [fechaf,setFechaf]=useState(new Date())
@@ -33,13 +34,14 @@ const HorariosPage = () => {
  // const [diasT, setDiasT] = useState('')
 
   const [ruta, setRuta] = useState(`${uri}horario_persofechas/28367/9/2122-09-01/2122-09-23`)
-  //const [rutaH, setRutaH] = useState(`${uri}horastotal/0/28367/2122-09-01/2122-09-23`)
+  const [rutaI, setRutaI] = useState(`${uri}inasistenciasF/28367/2122-09-01/2122-09-23`)
   //const [rutaD, setRutaD] = useState(`${uri}diasregistrados/28367/2122-09-01/2122-09-23`)
 
   
   
   
   useEffect(()=>{
+    
     const getfechas=()=>
     {
       let ff = new Date()
@@ -74,7 +76,7 @@ const HorariosPage = () => {
       
       if( Number.isInteger(legajo) && legajo!==9){
       setRuta(`${uri}horario_persofechas/${condi}/${legajo}/${fechai}/${fechaf}`)
-      //setRutaH(`${uri}horastotal/${condi}/${legajo}/${fechai}/${fechaf}`)
+      setRutaI(`${uri}inasistenciasF/${legajo}/${fechai}/${fechaf}`)
       //setRutaD(`${uri}diasregistrados/${condi}/${legajo}/${fechai}/${fechaf}`)
       }
      }
@@ -122,14 +124,24 @@ const HorariosPage = () => {
     }
     }*/
 
+    const getInasistencias = async  () => {
+      try{
+        console.log(rutaI)
+        const res = await axios.get(rutaI)
+        await setInasistencia(res.data)
+        
+       
+    }catch(error){
+        console.log(error)
+    }
+    }
+
     const getAsistencia = async  () => {
       try{
   
         const res = await axios.get(ruta)
         await setAsistencia(res.data)
         
-      
-      
        
     }catch(error){
         console.log(error)
@@ -139,10 +151,11 @@ const HorariosPage = () => {
 
     if( Number.isInteger(legajo) && legajo!==9){
     getAsistencia()
-      //getDias()
+    getInasistencias()
       //getHoras()
     }
-  }, [ruta,legajo])
+  
+  }, [ruta,rutaI,legajo])
 
  
 
@@ -268,8 +281,9 @@ const onChangeFf = (fecha)=>{
 
        </div>
       </div>
+      
        <div className='col xs-12 md-9'>
-          {asistencia.length > 0 ? <ViewHorarios datosasistencia={asistencia}/>: null} 
+          {inasistencia.length > 0 ? <ViewHorarios datosasistencia={asistencia}/>: null} 
       </div>
     </div>
     

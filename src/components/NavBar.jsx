@@ -35,6 +35,7 @@ const NavBar = () => {
                        <li className="nav-item"><NavLink to="/asistencia" className="nav-link">Asistencia Personal </NavLink></li>
                        <li className="nav-item"><NavLink to="/asistencia/asistenciaArea" className="nav-link">Asistencia Area</NavLink></li>
                        <li className="nav-item"><NavLink to="/asistencia/cambiarclave" className="nav-link">Cambiar Password</NavLink></li>
+                       <li className='nav-item'><NavLink to="/asistencia/virtual" className="nav-link">Asistencia Virtual</NavLink></li>
                        {!isLoged?
                        <li className="nav-item"><NavLink to ="/login"className="nav-link">Login</NavLink> </li>     
                        :<li className="nav-item"><button className="nav-link btn btn-info" onClick={logout}>Logout</button></li>}
