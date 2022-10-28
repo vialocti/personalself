@@ -1,7 +1,7 @@
 import React,{useEffect, useState} from 'react'
 import '../css/viewhorarios.css'
 
-const ViewHorarios = ({datosasistencia}) => {
+const ViewHorarios = ({datosasistencia,datosinasistencia}) => {
  
   const [promedio, setPromedio]=useState('')
   const [horasT, setHorasT] = useState('')
@@ -16,11 +16,11 @@ const ViewHorarios = ({datosasistencia}) => {
       
       let sumaH =datosasistencia.reduce((sum, value) => (typeof value.horasT == "number" ? sum + value.horasT : sum), 0)
       let fechaant=datosasistencia[0].fecha
-      let dias=1
-      datosasistencia.map((ele)=>{
+      let dias=1 
+      datosasistencia.map((ele)=> {
         if(fechaant !== ele.fecha){fechaant=ele.fecha; dias= dias + 1}
-      }
-      )
+        return true
+      })
       setDiasT(dias)
       setHorasT(sumaH.toFixed(2))
       const horas = Math.floor(parseFloat(sumaH)/parseFloat(dias))
@@ -40,8 +40,8 @@ const ViewHorarios = ({datosasistencia}) => {
 
     getPromedio()
     mostrarPromedio()
-   
-  }, [datosasistencia,horasT,diasT])
+     console.log(datosinasistencia)
+  }, [datosasistencia,datosinasistencia,horasT,diasT])
   
 
   
@@ -81,6 +81,35 @@ const ViewHorarios = ({datosasistencia}) => {
             Horas: {horasT} -- Dias: {diasT} -- Promedio: {promedio}
         </div>
         </div>
+
+        
+        <div className="row tbl-fixed">
+        <table className="table table-sm">
+          <thead>
+            <tr style={{backgroundColor:'grey'}}>
+              <th>Motivo Inas</th>
+              <th>Fecha Incio</th>
+              <th>fecha Fin</th>
+              
+            </tr>
+          </thead>
+      
+          <tbody>
+             {
+              datosinasistencia.map((ele,ind)=>
+                <tr key={ind} style={{backgroundColor:'violet'}}>
+                
+                  <td>{ele.mot}</td> 
+                  <td>{ele.fechai}</td> 
+                  <td>{ele.fechaf}</td>
+        
+                </tr>
+              )
+              }
+          </tbody>
+      </table>
+      </div>
+
       </div>
       
       

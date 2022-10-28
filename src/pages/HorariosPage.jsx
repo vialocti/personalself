@@ -124,19 +124,7 @@ const HorariosPage = () => {
     }
     }*/
 
-    const getInasistencias = async  () => {
-      try{
-        console.log(rutaI)
-        const res = await axios.get(rutaI)
-        await setInasistencia(res.data)
-        
-       
-    }catch(error){
-        console.log(error)
-    }
-    }
-
-    const getAsistencia = async  () => {
+        const getAsistencia = async  () => {
       try{
   
         const res = await axios.get(ruta)
@@ -151,13 +139,37 @@ const HorariosPage = () => {
 
     if( Number.isInteger(legajo) && legajo!==9){
     getAsistencia()
-    getInasistencias()
+    
       //getHoras()
     }
   
-  }, [ruta,rutaI,legajo])
+  }, [ruta,legajo])
 
  
+  useEffect(() => {
+
+    const getInasistencias = async  () => {
+      try{
+        console.log(rutaI)
+        const res = await axios.get(rutaI)
+        await setInasistencia(res.data)
+        
+       
+    }catch(error){
+        console.log(error)
+    }
+    }
+    
+    
+
+    if( Number.isInteger(legajo) && legajo!==9){
+        getInasistencias()
+      
+    }
+  
+  }, [rutaI,legajo])
+
+
 
   //funcion de conversion de fecha para consulta
    
@@ -200,12 +212,12 @@ const HorariosPage = () => {
     
     
     let url = `${uri}horario_persofechas/${condi}/${legajo}/${fi}/${ff}`
-    //let urlh= `${uri}horastotal/${condi}/${legajo}/${fi}/${ff}`
+    let urli= `${uri}inasistenciasF/${legajo}/${fi}/${ff}`
     //let urld= `${uri}diasregistrados/${condi}/${legajo}/${fi}/${ff}`
     // console.log(legajo)
     if( Number.isInteger(legajo) && legajo!==9 ){
         setRuta(url)
-      //  setRutaH(urlh)
+        setRutaI(urli)
         //setRutaD(urld)
     }
    
@@ -283,7 +295,7 @@ const onChangeFf = (fecha)=>{
       </div>
       
        <div className='col xs-12 md-9'>
-          {inasistencia.length > 0 ? <ViewHorarios datosasistencia={asistencia}/>: null} 
+          {asistencia.length > 0 ? <ViewHorarios datosasistencia={asistencia} datosinasistencia={inasistencia}/>: null} 
       </div>
     </div>
     
