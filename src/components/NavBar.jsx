@@ -35,7 +35,7 @@ const NavBar = () => {
                        <li className="nav-item"><NavLink to="/asistencia" className="nav-link">Asis.Personal </NavLink></li>
                        <li className="nav-item"><NavLink to="/asistencia/asistenciaArea" className="nav-link">Asis.Area</NavLink></li>
                        <li className="nav-item"><NavLink to="/asistencia/cambiarclave" className="nav-link">Cambiar Password</NavLink></li>
-                       <li className='nav-item'><NavLink to="/" className="nav-link">Asis.Virtual</NavLink></li>
+                       <li className='nav-item'><NavLink to="/asistencia/provivirtual" className="nav-link">Asis.Virtual</NavLink></li>
                        {!isLoged?
                        <li className="nav-item"><NavLink to ="/login"className="nav-link">Login</NavLink> </li>     
                        :<li className="nav-item"><button className="nav-link btn btn-info" onClick={logout}>Logout</button></li>}

@@ -55,27 +55,33 @@ const HorariosPage = () => {
             dia = ff.getDate()-1 < 10?'0'+ff.getDate()-1:ff.getDate()-1
             mes = ff.getMonth()+1<10 ? '0'+ (ff.getMonth()+1):ff.getMonth()+1
             fechaf = ff.getFullYear() + '-' + mes + '-' + dia
+            fechai = ff.getFullYear() + '-' + mes + '-01'
             //console.log(dia)
-      }else {
-        mes =ff.getMonth()
-        if (mes===0 || mes === 2 || mes === 4 || mes === 6 || mes === 7 || mes === 9 || mes===11){
-          dia=31
-        } if(mes === 1){
-          dia=29
-        }else{
-          dia=30
-        }
-        fechaf=ff.getFullYear()+'-' + mes +'-'+ dia
+      }else 
+        {
+          mes =ff.getMonth()-1
+        
+          if (mes === 0 || mes === 2 || mes === 4 || mes ===6 || mes === 7  || mes === 9 ){
+              dia=31
+          }else{
+            dia=30
+            console.log(mes)
+          }
+          let mesf = mes + 1
+          fechaf = ff.getFullYear()+'-' + mesf +'-'+ dia
+          fechai = ff.getFullYear() + '-' + mesf + '-01'
+
       }
 
-      //console.log(fechaf)
       
-      fechai = ff.getFullYear() + '-' + mes + '-01'
+      
+     
       
     //console.log(fechaf, fechai)
       
       if( Number.isInteger(legajo) && legajo!==9){
       setRuta(`${uri}horario_persofechas/${condi}/${legajo}/${fechai}/${fechaf}`)
+      
       setRutaI(`${uri}inasistenciasF/${legajo}/${fechai}/${fechaf}`)
       //setRutaD(`${uri}diasregistrados/${condi}/${legajo}/${fechai}/${fechaf}`)
       }
