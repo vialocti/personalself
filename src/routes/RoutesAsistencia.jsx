@@ -14,7 +14,7 @@ import PrivateRoutes from './PrivateRoutes'
 import CambiarClave from '../components/CambiarClave'
 import LoginPage from '../pages/LoginPage'
 import AsistenciaVirtualPage from '../pages/AsistenciaVirtualPage'
-import ProviVirtual from '../pages/ProviVirtual'
+//import ProviVirtual from '../pages/ProviVirtual'
 
 
 
@@ -36,7 +36,7 @@ const RoutesAsistencia = () => {
               <Route exact path ='/asistencia/asistenciaArea' element={<HorariosAreaPage/>} />
               <Route exact path='/asistencia/cambiarclave' element={<CambiarClave/>}/>
               <Route exact path='/asistencia/virtual' element={<AsistenciaVirtualPage/>}/>
-              <Route exact path='/asistencia/provivirtual' element={<ProviVirtual />}/>
+              <Route exact path='/asistencia/provivirtual' element={<AsistenciaVirtualPage/>}/>
             </Route>
         
         </Routes>

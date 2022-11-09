@@ -52,11 +52,11 @@ const HorariosPage = () => {
       let fechai=''
       // console.log(diaC)
       if (diaC > 1){
-            dia = ff.getDate()-1 < 10?'0'+ff.getDate()-1:ff.getDate()-1
-            mes = ff.getMonth()+1<10 ? '0'+ (ff.getMonth()+1):ff.getMonth()+1
+            dia = ff.getDate()-1 < 10 ? '0' + (ff.getDate()-1).toString() : (ff.getDate()-1).toString()
+            mes = ff.getMonth()+1<10 ? '0'+ (ff.getMonth()+1).toString() : (ff.getMonth()+1).toString()
             fechaf = ff.getFullYear() + '-' + mes + '-' + dia
             fechai = ff.getFullYear() + '-' + mes + '-01'
-            //console.log(dia)
+            
       }else 
         {
           mes =ff.getMonth()-1
@@ -80,10 +80,10 @@ const HorariosPage = () => {
     //console.log(fechaf, fechai)
       
       if( Number.isInteger(legajo) && legajo!==9){
-      setRuta(`${uri}horario_persofechas/${condi}/${legajo}/${fechai}/${fechaf}`)
+        setRuta(`${uri}horario_persofechas/${condi}/${legajo}/${fechai}/${fechaf}`)
       
-      setRutaI(`${uri}inasistenciasF/${legajo}/${fechai}/${fechaf}`)
-      //setRutaD(`${uri}diasregistrados/${condi}/${legajo}/${fechai}/${fechaf}`)
+        setRutaI(`${uri}inasistenciasF/${legajo}/${fechai}/${fechaf}`)
+        
       }
      }
 
@@ -98,38 +98,7 @@ const HorariosPage = () => {
 
 
      
-    
-    /*
-    const getDias = async  () => {
-      
-      try{
-  
-          const resd=await axios.get(rutaD)
-          await setDiasT(resd.data[0].nrodias)
-            
-    }catch(error){
-        console.log(error)
-    }
-    }
-
-  */
-
-    
-    /*
-    const getHoras = async  () => {
-      
-      try{
-  
-        const resh=await axios.get(rutaH)
-        await setHorasT(resh.data[0].horasT)
-    
-
-        
-    }catch(error){
-        console.log(error)
-    }
-    }*/
-
+   
         const getAsistencia = async  () => {
       try{
   
@@ -156,7 +125,7 @@ const HorariosPage = () => {
 
     const getInasistencias = async  () => {
       try{
-        console.log(rutaI)
+        
         const res = await axios.get(rutaI)
         await setInasistencia(res.data)
         

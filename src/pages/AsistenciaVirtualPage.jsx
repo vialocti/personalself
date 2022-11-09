@@ -15,9 +15,9 @@ const AsistenciaVirtualPage = () => {
    const {legajo,nombre,condi}= useContext(AuthContext)
     const [hora, setHora] = useState('')
     const [fecha, setFecha] = useState('')
-    const [horasT, setHorasT] = useState('')
-    const [nroreg, setNroreg] = useState('')
-    //const[asistencia, setAsistencia] =useState([])
+    //const [horasT, setHorasT] = useState(null)
+    // const [nroreg, setNroreg] = useState(null)
+    //const [asistencia, setAsistencia] =useState([])
     const [ruta, setRuta] = useState(`${uri}horario_persofechas/28367/9/2122-09-01/2122-09-23`)
 
 
@@ -47,16 +47,13 @@ const AsistenciaVirtualPage = () => {
           setHora(ti())  
               
       }
-
-      const cl = setInterval(() => {
-          
-      }, 2000);
-
+      
+       
       const fechahoy = new Date()
     
 
      convertirFecha(fechahoy)
-     return () => clearInterval(cl);
+     
 
 
      
@@ -66,7 +63,7 @@ const AsistenciaVirtualPage = () => {
     
     
     const getAsistencia = async  () => {
-      console.log(ruta)
+      //console.log(ruta)
           
       try{
   
@@ -80,8 +77,41 @@ const AsistenciaVirtualPage = () => {
     
   
     }
-  
 
+   //cargar salida update al registro de entrada
+  const grabarSalida = async (legajo,condi,hora,nroregistro,horastr) =>{
+     console.log(legajo,condi,hora,horastr,nroregistro)
+    try {
+      const resu = await axios.put(
+        `${uri}registrosalida/${condi}/${legajo}/${nroregistro}`,
+        {horastr, hora}
+        )
+      console.log(resu)
+    } catch (error) {
+      console.log(error)
+    }
+     
+  }  
+
+  //cargar nuevo registro
+  const grabarNuevoRegistro= async (legajo,condi,fecha,hora)=>{
+    console.log(condi,legajo,fecha,hora)
+    
+    try {
+    
+      const resu = await axios.post(`${uri}newhorario`,{condi,legajo,fecha,hora})
+      console.log(resu)
+
+    } catch (error) {
+    
+      console.log(error)
+    }
+    
+
+  }
+
+
+  //calcular horas entre entrada salida
   const calcularHoras=(hentrada,hsalida)=>{
     let horaE =parseFloat(hentrada.substr(0,2))
     let minE=parseFloat(hentrada.substr(3,2))
@@ -96,11 +126,17 @@ const AsistenciaVirtualPage = () => {
       minT=minS - minE
       horaT = horaS - horaE 
     }
-    let cantiH  = horaT + minT/60
     
-    setHorasT(cantiH)
+    let cantiH  = horaT + "." + minT
+    
+    //setHorasT(cantiH)
+    return cantiH
+   
+     
+    
   }
 
+  //verificar si es entrada nueva, nueva entrada o salida
   const VerificarFecha=async ()=>{
  
     const retorno = await getAsistencia()
@@ -108,10 +144,12 @@ const AsistenciaVirtualPage = () => {
       return 0
     }
     else{
-      console.log(retorno)
+      
       let nroregs = retorno.length
       if(retorno[nroregs-1].Hsalida ==='X'){
-        return retorno[nroregs-1].Hentrada
+        
+        
+        return retorno[nroregs-1].Hentrada + "," +retorno[nroregs-1].nroregistro
       
       }else{
       
@@ -122,13 +160,14 @@ const AsistenciaVirtualPage = () => {
   }
     
      
+  //tomar la accion de grabar entrada o salida
     
   const setHoraIO = async (e) =>{
     e.preventDefault()
    let tipo = await VerificarFecha()
    console.log(tipo)
    if (tipo===0){
-    //nuevoRegistro(legajo,condicion,fecha,hora)
+    grabarNuevoRegistro(legajo,condi,fecha,hora)
    Swal.fire({
       icon: 'success',
       title: 'Registro de Entrada',
@@ -146,7 +185,7 @@ const AsistenciaVirtualPage = () => {
       confirmButtonText: 'Registrar?'
     }).then((result) => {
       if (result.isConfirmed) {
-     //   nuevoRegistro(legajo,condicion,fecha,hora)
+     grabarNuevoRegistro(legajo,condi,fecha,hora)
         Swal.fire({
           title:'Ingreso Registrado',
           icon:'success',
@@ -156,15 +195,21 @@ const AsistenciaVirtualPage = () => {
       }
     })
    }else{
-   // grabarSalida(legajo,condicion,fecha,hora)
-   calcularHoras(tipo,hora)
-    Swal.fire({
+   
+    let valores=tipo.split(',')
+    let nreg=valores[1]
+    let horaE=valores[0]
+    let horaminu= calcularHoras(horaE,hora)
+   
+   grabarSalida(legajo,condi,hora,nreg,horaminu)
+    
+   Swal.fire({
       icon: 'success',
       title: 'Registro de Salida',
       text: `fecha:${fecha} - hora:${hora}`
     })
    }
-    navigate('/')
+   navigate('/asistencia')
     
   }
 
@@ -175,34 +220,36 @@ const AsistenciaVirtualPage = () => {
 
     <div className='row'>
               
-              <div className='col md-3 xs-12'>
+              <div className='col md-2 xs-12'>
 
               </div>
               
-              <div className='col md-6 xs-12'>
+              <div className='col md-8 xs-12'>
             
-                <div className='caja'>
-                
-                    <div className='cabecera'>
+                <div className='card'>
+                  <div className='card-header'>
+                    <h4>Registro Asistencia Virtual</h4>
+                </div>
+                    <div className='car-body m-2 p-2'>
               
-                        <h4>Registro asistencia Virtual</h4>
-                        <h6>Fecha- {fecha}</h6>
-                        <h6>Hora - {hora}</h6>
-                        <h5>Legajo:{legajo}</h5>
-                        <h5>Nombre:{nombre}</h5>
+                        
+                        <h6>Fecha: {fecha}</h6>
+                        <h6>Hora:  {hora}</h6>
+                        <h5>Legajo: {legajo}</h5>
+                        <h5>Nombre: {nombre}</h5>
                         
                     </div>
-                   <div className='cuerpo'>
-                      
-                   </div>
-                    <div className='pie'>
-                        <button onClick={setHoraIO} className='btn btn-primary'>Enviar Asistencia</button>
+                   
+                    <div className='card-footer m-2'>
+                        <h4>El Horario Registrado, Sin asistencia a la Facultad solo queda Acrediatado por Su superior</h4> 
+                       
+                        <br/><button onClick={setHoraIO} className='btn btn-primary'>Registrar Asistencia</button>
                     </div>
             
                 </div>
               </div>
             
-                <div className='col md-3 xs-12'>
+                <div className='col md-2 xs-12'>
 
                 </div>
           </div>

@@ -32,10 +32,47 @@ const NavBar = () => {
                 <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div className="navbar-nav">
                        
-                       <li className="nav-item"><NavLink to="/asistencia" className="nav-link">Asis.Personal </NavLink></li>
-                       <li className="nav-item"><NavLink to="/asistencia/asistenciaArea" className="nav-link">Asis.Area</NavLink></li>
-                       <li className="nav-item"><NavLink to="/asistencia/cambiarclave" className="nav-link">Cambiar Password</NavLink></li>
-                       <li className='nav-item'><NavLink to="/asistencia/provivirtual" className="nav-link">Asis.Virtual</NavLink></li>
+                    
+                      
+                     
+                       
+                       <li className="dropdown">
+                        <button 
+                        className="btn btn-primary dropdown-toggle" 
+                        type="button" id="dropdownMenuButton1" 
+                        data-bs-toggle="dropdown" aria-expanded="false"
+                        style={{margin:'0 5px 0 5px'}}
+                        >
+                            Asistencia
+                        </button>
+                            <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li className="nav-item"><NavLink to="/asistencia" className="nav-link">Ver Registros </NavLink></li>
+                            <li className='nav-item'><NavLink to="/asistencia/provivirtual" className="nav-link">Registro Virtual</NavLink></li>
+                            
+                            
+                            </ul>
+                        </li>
+                        
+                        <li className="dropdown">
+                        <button 
+                        className="btn btn-primary dropdown-toggle" 
+                        type="button" id="dropdownMenuButton2" 
+                        data-bs-toggle="dropdown" aria-expanded="false"
+                        style={{margin:'0 5px 0 5px'}}
+                        >
+                            Supervision
+                        </button>
+                            <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                                <li className="nav-item"><NavLink to="/asistencia/asistenciaArea" className="nav-link">Asistencia Area</NavLink></li>
+                              {/*  <li className="nav-item"><NavLink to="/" className="nav-link"> Control Asis.Virtual</NavLink></li> */}   
+                            
+                            </ul>
+                        </li>
+                        
+                        
+                        <li className="nav-item"><NavLink to="/asistencia/cambiarclave" className="nav-link">Cambiar Password</NavLink></li>
+
+
                        {!isLoged?
                        <li className="nav-item"><NavLink to ="/login"className="nav-link">Login</NavLink> </li>     
                        :<li className="nav-item"><button className="nav-link btn btn-info" onClick={logout}>Logout</button></li>}

@@ -16,10 +16,12 @@ const HomePage = () => {
                 
                     <ul className="list-group">
                       <li className="list-group-item"> Control de Asistencia Personal </li>
-                      <li className="list-group-item"> Mostrar sus registros de Asistencia </li>
-                      <li className="list-group-item"> Mostrar horas totales y promedio en un periodo dado</li>
-                      <li className="list-group-item"> Pudiendo corroborar que sean los correctos </li>
-                      <li className="list-group-item"> Verificar asistencias por Areas de responsabilidad </li>
+                      <li className="list-group-item"> Mostrar sus Registros de Asistencia </li>
+                      <li className="list-group-item"> Mostrar Horas Totales y Promedio en un periodo dado</li>
+                      <li className="list-group-item"> Pudiendo Corroborar que Sean los Correctos </li>
+                      <li className="list-group-item"> Verificar Asistencias por Areas de Responsabilidad </li>
+                      <li className="list-group-item"> Registrar Asistencia Modalidad Virtual </li>
+                      <li className="list-group-item"> Verificar y Acreditar Registros Virtuales </li>
                     </ul>
                 
             

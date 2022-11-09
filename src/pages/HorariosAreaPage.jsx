@@ -34,6 +34,19 @@ const HorariosAreaPage = () => {
 
   const [ruta, setRuta] = useState(`${uri}horas-area_fecha/t/2122-09-01/2122-09-23`)
  
+  const traertipo=(modalidad)=>{
+  if(modalidad === 'V'){
+    return 'V'
+  }else if(modalidad === 'A'){
+    return 'A'
+  }else{
+    return 'P'
+  }
+}
+
+
+
+ 
 
   useEffect(()=>{
       
@@ -42,7 +55,7 @@ const HorariosAreaPage = () => {
         if(supArea==='A'){
         const areasAuth =authAreas.find(area=>area.legajo===legajo)
         setAreasAuth(areasAuth.areas)
-        console.log(areasAuth)
+        //console.log(areasAuth)
         }
       }else{
         Swal.fire({
@@ -97,7 +110,25 @@ const HorariosAreaPage = () => {
 
 }
 
+  //
+  const updatehorario =async(legajo, nroregistro)=>{
+    
+    try {
+      const resuup = await axios.put(`${uri}acreditarhoras/${legajo}/${nroregistro}`)
+      
+      if (resuup.statusText === 'OK'){
+        const res = await axios.get(ruta)
+        await setAsistencia_area(res.data)
+           Swal.fire({
+            title:'Horario Acreditado',
+            icon:'success',
+          })
+        }
+    } catch (error) {
+      console.log(error)
+    }
 
+  }
 
   //preparar ruta de busqueda
   const buscarAsistencia = async ()=>{
@@ -130,7 +161,7 @@ const HorariosAreaPage = () => {
           
         })
       }
-    console.log(areaCombo)
+    //console.log(areaCombo)
     }else
     
       if (areaCombo===area){
@@ -164,13 +195,34 @@ const onChangeFf = (fecha)=>{
 }
 
 
+  //acreditar horas virtuales trabajadas
+  const acreditarHoras = (legajo, nroregistro, fecha,apellido)=>{
+    Swal.fire({
+      title: 'Acredita Horas No Presenciales?',
+      text: `Persona:${apellido} - fecha:${fecha}`,
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#f33',
+      confirmButtonText: 'Confirmar?'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        
+        updatehorario(legajo,nroregistro)
+        
+      
+      }
+    })
+    
+  }
+
   return (
     <div>
     
     {habilitado &&
     <div className='row m-2'>
           
-      <div className='col-md-5 sm-5 xs-12'>
+      <div className='col-md-4 sm-4 xs-12'>
       
       <div className="row row-tit" >
          
@@ -255,7 +307,7 @@ const onChangeFf = (fecha)=>{
 
        </div>
       </div>
-      <div className='col-md-7 sm-7 xs-12 '>
+      <div className='col-md-8 sm-8 xs-12 '>
           {asistencia_area.length > 0 ?  <div className='container tbl-container'>
         <div className="row tbl-fixed">
       <table className="table table-striped table-sm">
@@ -266,6 +318,8 @@ const onChangeFf = (fecha)=>{
               <th>Fecha</th>
               <th>Entrada</th>
               <th>Salida</th>
+              <th>Modalidad</th>
+              <th>Acreditar</th>
             </tr>
           </thead>
       
@@ -279,7 +333,15 @@ const onChangeFf = (fecha)=>{
                   <td>{ele.fecha}</td> 
                   <td>{ele.Hentrada}</td> 
                   <td>{ele.Hsalida}</td>
-        
+                  <td>{traertipo(ele.virtual)}</td>
+                  <td>{ele.virtual==='V'?(
+                    <button 
+                    className='btn btn-primary'
+                    onClick={()=>acreditarHoras(ele.legajo,ele.nroregistro,ele.fecha,ele.apellido)}
+                    >
+                      Acreditar
+                    </button>
+                  ):null}</td>
                 </tr>
               )
               }

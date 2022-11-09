@@ -6,7 +6,25 @@ const ViewHorarios = ({datosasistencia,datosinasistencia}) => {
   const [promedio, setPromedio]=useState('')
   const [horasT, setHorasT] = useState('')
   const [diasT, setDiasT] = useState('')
+  
+ const traertipo=(modalidad)=>{
+  console.log(modalidad)
+      if(modalidad === 'V'){
+        return 'Virt.No Acreditado'
+      }else if(modalidad === 'A'){
+        return 'Virt.Acreditado'
+      }else{
+        return 'Presencial'
+      }
+ }
 
+  const buscarmotivo =(mot)=>{
+    if(mot==='04'){
+      return 'Razon Particular'
+    }else if(mot==='05'){
+      return 'Enfermedad'
+    }
+  }
 
 
 
@@ -14,6 +32,20 @@ const ViewHorarios = ({datosasistencia,datosinasistencia}) => {
   
     const getPromedio=()=>{
       
+      let asistenciasconfi = datosasistencia.filter((asistencia) => asistencia.virtual !== 'V')
+     
+      
+      let sumaH =asistenciasconfi.reduce((sum, value) => (typeof value.horasT == "number" ? sum + value.horasT : sum), 0)
+      if(sumaH!==0){
+      let fechaant=asistenciasconfi[0].fecha
+      let dias=1 
+      asistenciasconfi.map((ele)=> {
+        if(fechaant !== ele.fecha){fechaant=ele.fecha; dias= dias + 1}
+        return true
+      })
+    
+
+      /*
       let sumaH =datosasistencia.reduce((sum, value) => (typeof value.horasT == "number" ? sum + value.horasT : sum), 0)
       let fechaant=datosasistencia[0].fecha
       let dias=1 
@@ -21,26 +53,31 @@ const ViewHorarios = ({datosasistencia,datosinasistencia}) => {
         if(fechaant !== ele.fecha){fechaant=ele.fecha; dias= dias + 1}
         return true
       })
+      */
       setDiasT(dias)
       setHorasT(sumaH.toFixed(2))
       const horas = Math.floor(parseFloat(sumaH)/parseFloat(dias))
       const minutos = Math.round(((parseFloat(sumaH)/parseFloat(dias)) - horas)*60, 2)
       
       setPromedio(`${horas} horas con ${minutos} minutos`)
-    
+      }else{ 
+        setDiasT(0)
+        setHorasT(0)
+      }
     }
 
     const mostrarPromedio =()=>{
+      if (diasT > 0 && horasT>0){
       const horas = Math.floor(parseFloat(horasT)/parseFloat(diasT))
       const minutos = Math.round(((parseFloat(horasT)/parseFloat(diasT)) - horas)*60, 2)
      
       setPromedio(`${horas} horas con ${minutos} minutos`)
-      
+      }else{ setPromedio(`0 horas con 0 minutos`)}
     }
 
     getPromedio()
     mostrarPromedio()
-     console.log(datosinasistencia)
+     //console.log(datosinasistencia)
   }, [datosasistencia,datosinasistencia,horasT,diasT])
   
 
@@ -58,6 +95,7 @@ const ViewHorarios = ({datosasistencia,datosinasistencia}) => {
               <th>Fecha</th>
               <th>Entrada</th>
               <th>Salida</th>
+              <th>Modalidad</th>
             </tr>
           </thead>
       
@@ -69,6 +107,7 @@ const ViewHorarios = ({datosasistencia,datosinasistencia}) => {
                   <td>{ele.fecha}</td> 
                   <td>{ele.Hentrada}</td> 
                   <td>{ele.Hsalida}</td>
+                  <td>{traertipo(ele.virtual)}</td>
         
                 </tr>
               )
@@ -87,7 +126,7 @@ const ViewHorarios = ({datosasistencia,datosinasistencia}) => {
         <table className="table table-sm">
           <thead>
             <tr style={{backgroundColor:'grey'}}>
-              <th>Motivo Inas</th>
+              <th>Mot.Inasistencia</th>
               <th>Fecha Incio</th>
               <th>fecha Fin</th>
               
@@ -99,7 +138,7 @@ const ViewHorarios = ({datosasistencia,datosinasistencia}) => {
               datosinasistencia.map((ele,ind)=>
                 <tr key={ind} style={{backgroundColor:'violet'}}>
                 
-                  <td>{ele.mot}</td> 
+                  <td>{buscarmotivo(ele.mot)}</td> 
                   <td>{ele.fechai}</td> 
                   <td>{ele.fechaf}</td>
         
